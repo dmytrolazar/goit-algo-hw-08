@@ -22,12 +22,17 @@ def connect_cables(cables: list):
     if no_of_cables < 2:
         print("Замало кабелів для з'єднання.")
     else:
-        connection_order.append((cables[0], cables[1]))
-        total_price += cables[0] + cables[1]
+        cable_prev_prev = cables.pop(0)
+        cable_prev = cables.pop(0)
+        connection_order.append((cable_prev_prev, cable_prev))
+        total_price += cable_prev_prev + cable_prev
         if no_of_cables > 2:
-            for i in range(2, no_of_cables):
-                connection_order.append((cables[i-2], cables[i]))
-                total_price += cables[i-2] + cables[i]
+            while len(cables) > 0:
+                cable_this = cables.pop(0)
+                connection_order.append((cable_this, cable_prev_prev))
+                total_price += cable_prev_prev + cable_this
+                cable_prev_prev = cable_prev
+                cable_prev = cable_this
         print("Порядок з'єднання кабелів, парами:", connection_order)
         print("Загальні витрати на з'єднання кабелів:", total_price)
 
